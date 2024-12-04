@@ -30,6 +30,26 @@ from utils import (
     OPENAI_MODEL_LIST,
     temperature_config,
 )
+from transformers import AutoTokenizer
+
+
+def format_chat_ibm(messages, tokzr):
+    prompt =  tokzr.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    ret = [{
+        "role": "user",
+        "content": prompt + "<|assistant|>\n",
+    }]
+    return ret
+
+
+def format_chat(messages, tokzr):
+    prompt =  tokzr.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    ret = [{
+        "role": "user",
+        "content": prompt,
+    }]
+    return ret
+
 
 
 def get_answer(
@@ -41,6 +61,16 @@ def get_answer(
     api_type = endpoint_info["api_type"]
 
     conv = []
+
+    # hardcode system prompt for ibm models
+    if "granite-8b" in model:
+        endpoint_info['system_prompt'] = "I am, Red Hat® Instruct Model based on Granite 7B, an AI language model developed by Red Hat and IBM Research, based on the Granite-7b-base language model. My primary function is to be a chat assistant."
+
+    elif "merlinite" in model or "ibm" in model or "granite" in model:
+        endpoint_info['system_prompt'] = "You are an AI language model developed by IBM Research. You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior."
+
+    elif "rhelai" in model:
+        endpoint_info['system_prompt'] = "I am, based on the Granite-7b-base language model. My primary function is to be a chat assistant."
 
     if "system_prompt" in endpoint_info.keys():
         conv.append({"role": "system", "content": endpoint_info["system_prompt"]})
@@ -54,6 +84,7 @@ def get_answer(
         for j in range(len(question["turns"])):
             conv.append({"role": "user", "content": question["turns"][j]["content"]})
             if api_type == "anthropic":
+
                 output = chat_completion_anthropic(model=endpoint_info["model_name"],
                                                    messages=conv,
                                                    temperature=temperature,
@@ -80,8 +111,14 @@ def get_answer(
                                                 temperature=temperature,
                                                 max_tokens=max_tokens)
             else:
+                if "merlinite" in model or "ibm" in model or "granite" in model:
+                    formatted_conv = format_chat_ibm(conv, endpoint_info['tokenizer_'])
+                else:
+                    formatted_conv = format_chat(conv, endpoint_info['tokenizer_'])
+                # print(formatted_conv)
+                # breakpoint()
                 output = chat_completion_openai(model=endpoint_info["model_name"], 
-                                                messages=conv, 
+                                                messages=formatted_conv, 
                                                 temperature=temperature, 
                                                 max_tokens=max_tokens, 
                                                 api_dict=api_dict)
@@ -89,7 +126,7 @@ def get_answer(
 
             turns.append({"content": output})
         choices.append({"index": i, "turns": turns})
-    
+
     # Dump answers
     ans = {
         "question_id": question["question_id"],
@@ -132,6 +169,9 @@ if __name__ == "__main__":
         assert model in endpoint_list
         endpoint_info = endpoint_list[model]
 
+        # launch the vllm serving here!
+
+
         question_file = os.path.join("data", settings["bench_name"], "question.jsonl")
         questions = load_questions(question_file)
 
@@ -143,6 +183,8 @@ if __name__ == "__main__":
         else:
             parallel = 1
 
+        tokenizer_ = AutoTokenizer.from_pretrained(endpoint_info["model_name"])
+        endpoint_info['tokenizer_'] = tokenizer_
         # We want to maximizes the number of tokens generate per answer: max_tokens = specified token # - input tokens #
         if "tokenizer" in endpoint_info:
             question_list = [question["turns"][0]["content"] for question in questions]
@@ -168,6 +210,18 @@ if __name__ == "__main__":
                 if model in existing_answer and question["question_id"] in existing_answer[model]:
                     count += 1
                     continue
+                # debug
+                # ex = get_answer(
+                #     question,
+                #     model,
+                #     endpoint_info,
+                #     settings["num_choices"],
+                #     max_tokens[index],
+                #     settings["temperature"],
+                #     answer_file,
+                #     get_endpoint(endpoint_info["endpoints"]),
+                # )
+
                 future = executor.submit(
                     get_answer,
                     question,

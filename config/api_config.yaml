@@ -24,4 +24,121 @@ gpt-4-1106-preview:
     model_name: gpt-4-1106-preview
     endpoints: null
     api_type: openai
-    parallel: 8
+    parallel: 32
+
+merlinite-simpo-ratio-0.5-lr-3e-7-beta-12.0:
+    model_name: /new_data/gx/density-ratio-reward/merlinite-simpo-exps/merlinite-simpo-ratio-0.5-lr-3e-7-beta-12.0/checkpoint-475
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+merlinite-simpo-ratio-0.5-lr-3e-7-beta-18.0:
+    model_name: /new_data/gx/density-ratio-reward/merlinite-simpo-exps/merlinite-simpo-ratio-0.5-lr-3e-7-beta-18.0/checkpoint-475
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+
+llama-3-8b-instruct-simpo-mistral-bt-v0-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps/llama-3-8b-instruct-simpo-mistral-bt-v0-32/checkpoint-468
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-armo-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps/llama-3-8b-instruct-simpo-armo-32/checkpoint-468
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-nh-vanilla-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps/llama-noushermes-simpo-ratio-0.3-lr-1e-6-beta-10.0/checkpoint-474/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-nh-vanilla-base-new-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/llama-noushermes-vs-base-balance-simpo-ratio-0.3-lr-7e-7-beta-18.0/checkpoint-474
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-nh-domain-system-chat0-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/llama-noushermes-domain-pt-chav0-balance-simpo-ratio-0.3-lr-1e-6-beta-10.0/checkpoint-474/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-nh-safety-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/llama-noushermes-chav1-balance-1-simpo-ratio-0.3-lr-9e-7-beta-10.0/checkpoint-474/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+
+llama-3-8b-instruct-simpo-nh-vanilla-route-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/chatv2/llama-vanilla-icls-simpo-ratio-0.3-lr-1e-6-beta-18.0/checkpoint-474/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-sft-base-route-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/chatv2/llama-noushermes-fs17-balance-1-simpo-ratio-0.3-lr-5e-7-beta-10.0/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+llama-3-8b-instruct-simpo-sft-base-vanilla-32:
+    model_name: /new_data/gx/density-ratio-reward/llama-3-simpo-exps-iclr/llama-sft-base-simpo-ratio-0.3-lr-1e-6-beta-10.0/checkpoint-475/
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 1
+
+
+granite-8b-simpo-bt-ratio-05-lr-1e-6-beta-10:
+    model_name: /new_data/gx/density-ratio-reward/granite-8b-preview-simpo-exps/granite-8b-simpo-bt-ratio-0.5-lr-1e-6-beta-10.0/checkpoint-476
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+
+llama-3.1-70b-instruct-rhelai:
+    model_name: /new_data/experiments/ap-70b-all-rhelai-3k-6/hf_format/samples_7184111
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
+
+
+llama-3.1-70b-tulu3-sft:
+    model_name: /new_data/experiments/llama-3.1-tulu3-70b/Llama-3.1-Tulu-3-70B-SFT
+    endpoints:
+        - api_base: http://localhost:8020/v1/
+          api_key: token-abc123
+    api_type: openai
+    parallel: 4
