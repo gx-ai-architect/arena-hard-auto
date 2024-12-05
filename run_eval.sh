@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the correct number of arguments is provided
-if [ "$#" -ne 4 ]; then
+if [ "$#" -ne 3 ]; then
     echo "Usage: bash run_eval.sh <model_name> <model_path> <parallel>"
     exit 1
 fi
