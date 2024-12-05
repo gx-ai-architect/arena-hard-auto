@@ -168,7 +168,7 @@ if __name__ == "__main__":
     for model in settings["model_list"]:
         assert model in endpoint_list
         endpoint_info = endpoint_list[model]
-
+        
         # launch the vllm serving here!
 
 

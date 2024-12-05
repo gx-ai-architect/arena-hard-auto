@@ -123,6 +123,8 @@ def judgment(**args):
     with open(output_file, "a") as f:
         f.write(json.dumps(output, ensure_ascii=False) + "\n")
 
+    with open("judgment_output.jsonl", "a") as f:
+        f.write(json.dumps(output, ensure_ascii=False) + "\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
