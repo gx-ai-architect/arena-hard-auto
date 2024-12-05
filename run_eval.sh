@@ -35,9 +35,6 @@ python gen_judgment.py
 # show eval results
 python show_result.py 
 
-# save eval results to location results location
-cp judgment_output.jsonl /new_data/gx/arena_hard_results/arena-hard-v0.1/model_judgment/gpt-4-1106-preview/$MODEL_NAME.jsonl
-
 # Save evaluation results to the specified location
 SAVE_DIR="/new_data/gx/arena_hard_results/arena-hard-v0.1/model_judgment/gpt-4-1106-preview"
 cp judgment_output.jsonl "$SAVE_DIR/$MODEL_NAME.jsonl"
